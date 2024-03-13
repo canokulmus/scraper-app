@@ -16,7 +16,23 @@ import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 import borders from "assets/theme/base/borders";
 
-function Table({ columns, rows }) {
+const columns = [
+  { name: "journalID", align: "left" },
+  { name: "articleTitle", align: "left" },
+  { name: "articleWriters", align: "left" },
+  { name: "articleType", align: "left" },
+  { name: "articleDate", align: "left" },
+  { name: "journalTitle", align: "left" },
+  { name: "searchKeywords", align: "left" },
+  { name: "articleKeywords", align: "left" },
+  { name: "articleAbstract", align: "left" },
+  { name: "articleRefrences", align: "left" },
+  { name: "articleCitations", align: "left" },
+  { name: "articleDoi", align: "left" },
+  { name: "articleURL", align: "left" },
+  { name: "pdfURL", align: "left" },
+]
+function Table({ rows }) {
   const { grey } = colors;
   const { size, fontWeightBold } = typography;
   const { borderWidth } = borders;

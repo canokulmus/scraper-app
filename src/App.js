@@ -100,7 +100,7 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Switch>
         {getRoutes(routes)}
-        <Redirect from="*" to="/login" />
+        <Redirect from="*" to="/scrape" />
       </Switch>
     </ThemeProvider>
   );

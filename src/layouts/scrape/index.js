@@ -1,4 +1,5 @@
 import VuiBox from "components/VuiBox";
+import Table from "examples/Tables/Table";
 import VuiButton from "components/VuiButton";
 import VuiInput from "components/VuiInput";
 import VuiTypography from "components/VuiTypography";
@@ -12,14 +13,13 @@ import { runScraper } from "_services/prediction";
 
 function Products() {
 
-    const [url, setUrl] = useState("");
+    const [searchString, setSearchString] = useState("");
     const [loading, setLoading] = useState(false);
-    const [scrapedData, setScrapedData] = useState(null);
-
+    const [rows, setRows] = useState([])
 
     const handleClick = () => {
-        if(url === "") {
-            alert("Please enter a URL");
+        if(searchString === "") {
+            alert("Please enter a list of search keywords");
             return;
         }
         setLoading(true);
@@ -33,18 +33,81 @@ function Products() {
     const getData = async () => {
         await Promise.allSettled([
             runScraper({
-                url: url,
+                searchString: searchString,
              })
                  .then((response) => {
-                     console.log("scraped", response.data.data);
-                     setScrapedData(response.data.data)
-                     setLoading(false)
+                    setLoading(false)
+                    setRows(JSON.parse(response.data.data).map((item) => ({
+                        journalID: <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                            {item.journalID}
+                            </VuiTypography>,
+                        articleTitle:<VuiTypography variant="caption" color="white" fontWeight="medium">
+                            "{item.articleTitle}"
+                            </VuiTypography>,
+                        articleWriters:<VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                                {item.articleWriters.join(", ")}
+                            </VuiTypography>,
+                        articleType: (
+                            <VuiTypography variant="caption" color="white" fontWeight="medium">
+                            {item.articleType}
+                            </VuiTypography>
+                        ),
+                        articleDate: (
+                            <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                            {item.articleDate}
+                            </VuiTypography>
+                        ),
+                        journalTitle: (
+                            <VuiTypography variant="caption" color="white" fontWeight="medium">
+                            {item.journalTitle}
+                            </VuiTypography>
+                        ),
+                        searchKeywords: (
+                            <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                            {item.searchKeywords.join(", ")}
+                            </VuiTypography>
+                        ),
+                        articleKeywords: (
+                            <VuiTypography variant="caption" color="white" fontWeight="medium">
+                            {item.articleKeywords.join(", ")}
+                            </VuiTypography>
+                        ),
+                        articleAbstract: (
+                            <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                            {item.articleAbstract}
+                            </VuiTypography>
+                        ),
+                        articleRefrences: (
+                            <VuiTypography variant="caption" color="white" fontWeight="medium">
+                            {/* {item.articleRefrences.join(" | ")} */}
+                            </VuiTypography>
+                        ),
+                        articleCitations: (
+                            <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                            {item.articleCitations}
+                            </VuiTypography>
+                        ),
+                        articleDoi: (
+                            <VuiTypography variant="caption" color="white" fontWeight="medium">
+                            {item.articleDoi}
+                            </VuiTypography>
+                        ),
+                        articleURL: (
+                            <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                            {item.articleURL}
+                            </VuiTypography>
+                        ),
+                        pdfURL: (
+                            <VuiTypography component="a" href={item.pdfURL}  variant="caption" color="white" fontWeight="medium">
+                                {item.pdfURL}
+                            </VuiTypography>
+                        ),
+                        })))
                  }
              )
          ])
      }
  
-
     return (
         <DashboardLayout>
             <DashboardNavbar />
@@ -57,7 +120,7 @@ function Products() {
                     marginTop: "50px !important",
                 })}
             >
-                Give a URL of the product you want to scrape
+                Enter a list of search keywords  <small> (separated with commas: orange, apple etc.)</small>
             </VuiTypography>
             <VuiBox
                 sx={() => ({
@@ -67,21 +130,19 @@ function Products() {
                 })}
             >
                 <VuiInput
-                value = {url}
-                onChange = {(e) => setUrl(e.target.value)}
-                placeholder="Enter product URL..."
-                sx={({ breakpoints }) => ({
-                    maxWidth: "80%",
-                    backgroundColor: "info.main !important",
-                    height: "60px !important",
-                    fontSize: "20px !important",
-
-                    // placeholder
-                    "&::placeholder": {
+                    value = {searchString}
+                    onChange = {(e) => setSearchString(e.target.value)}
+                    placeholder="Enter search keywords: building, construction, etc."
+                    sx={({ breakpoints }) => ({
+                        maxWidth: "80%",
+                        backgroundColor: "info.main !important",
+                        height: "60px !important",
                         fontSize: "20px !important",
-                    },
-                    
-                })}
+                        "&::placeholder": {
+                            fontSize: "20px !important",
+                        },
+                        
+                    })}
                 />
                 <LoadingButton
                     size="large"
@@ -93,7 +154,6 @@ function Products() {
                     sx={{
                         marginLeft: "10px",
                         color: "white !important",
-                        // clicked 
                         "&.MuiButton-contained.Mui-disabled": {
                             backgroundColor: "#66d432 !important",
                             color: "white !important",
@@ -129,10 +189,8 @@ function Products() {
             )}
             </VuiBox>
             <VuiBox>
-                {scrapedData && (
-                    <p style={{color: "white", padding:20, fontSize: "14px", overflow:"hidden"}}>
-                        {scrapedData}
-                    </p>
+                {rows.length > 0 && (
+                    <Table rows={rows} />
                 )}
             </VuiBox>
         </DashboardLayout>
