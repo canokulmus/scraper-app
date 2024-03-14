@@ -93,7 +93,7 @@ function Products() {
                             </VuiTypography>
                         ),
                         articleURL: (
-                            <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                            <VuiTypography component="a" href={item.articleURL} variant="caption" color="text" fontWeight="medium">
                             {item.articleURL}
                             </VuiTypography>
                         ),
