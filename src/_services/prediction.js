@@ -23,7 +23,7 @@ export const runScraper = (data) => {
         });
 };
 
-export const getProducts = (data) => {
+export const getScrapedData = (data) => {
     const requestOptions = {
         method: "POST",
         headers: {

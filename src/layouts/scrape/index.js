@@ -38,68 +38,69 @@ function Products() {
                  .then((response) => {
                     setLoading(false)
                     setRows(JSON.parse(response.data.data).map((item) => ({
+
                         journalID: <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-                            {item.journalID}
+                            {item.journalID ? item.journalID : ""}
                             </VuiTypography>,
                         articleTitle:<VuiTypography variant="caption" color="white" fontWeight="medium">
-                            "{item.articleTitle}"
+                            {item.articleTitle ? item.articleTitle : ""}
                             </VuiTypography>,
                         articleWriters:<VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-                                {item.articleWriters.join(", ")}
+                                {(item.articleWriters && item.articleWriters.length && Array.isArray(item.articleWriters)) > 0 ? item.articleWriters.join(", ") : ""}
                             </VuiTypography>,
                         articleType: (
                             <VuiTypography variant="caption" color="white" fontWeight="medium">
-                            {item.articleType}
+                            {item.articleType ? item.articleType : ""}
                             </VuiTypography>
                         ),
                         articleDate: (
                             <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-                            {item.articleDate}
+                            {item.articleDate ? item.articleDate : ""}
                             </VuiTypography>
                         ),
                         journalTitle: (
                             <VuiTypography variant="caption" color="white" fontWeight="medium">
-                            {item.journalTitle}
+                            {item.journalTitle ? item.journalTitle : ""}
                             </VuiTypography>
                         ),
                         searchKeywords: (
                             <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-                            {item.searchKeywords.join(", ")}
+                            {(item.searchKeywords && item.searchKeywords.length && Array.isArray(item.searchKeywords)) > 0 ? item.searchKeywords.join(", ") : ""}
                             </VuiTypography>
                         ),
                         articleKeywords: (
                             <VuiTypography variant="caption" color="white" fontWeight="medium">
-                            {item.articleKeywords.join(", ")}
+                            {item.articleKeywords && item.articleKeywords.length && Array.isArray(item.articleKeywords) > 0 ? item.articleKeywords.join(", ") : ""}
                             </VuiTypography>
                         ),
                         articleAbstract: (
                             <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-                            {item.articleAbstract}
+                            {item.articleAbstract ? item.articleAbstract : ""}
                             </VuiTypography>
                         ),
                         articleRefrences: (
                             <VuiTypography variant="caption" color="white" fontWeight="medium">
-                            {/* {item.articleRefrences.join(" | ")} */}
+                            {item.articleRefrences && item.articleRefrences.length && Array.isArray(item.articleRefrences) > 0 ? item.articleRefrences.join(" | ") : ""}
                             </VuiTypography>
                         ),
                         articleCitations: (
                             <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-                            {item.articleCitations}
+                            {item.articleCitations ? item.articleCitations : ""}
                             </VuiTypography>
                         ),
                         articleDoi: (
                             <VuiTypography variant="caption" color="white" fontWeight="medium">
-                            {item.articleDoi}
+                            {item.articleDoi ? item.articleDoi : ""}
                             </VuiTypography>
                         ),
                         articleURL: (
                             <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-                            {item.articleURL}
+                            {item.articleURL ? item.articleURL : ""}
                             </VuiTypography>
                         ),
                         pdfURL: (
                             <VuiTypography component="a" href={item.pdfURL}  variant="caption" color="white" fontWeight="medium">
-                                {item.pdfURL}
+                                {item.pdfURL ? item.pdfURL : ""}
                             </VuiTypography>
                         ),
                         })))
