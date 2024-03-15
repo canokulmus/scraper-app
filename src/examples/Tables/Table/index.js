@@ -115,7 +115,13 @@ function Table({ rows }) {
               variant="button"
               fontWeight="regular"
               color="text"
-              sx={{ display: "inline-block", width: "max-content" }}
+              sx={{ 
+                display: "inline-block",
+                width: "max-content",
+                marginTop: "20px",
+                marginBottom: "20px",
+
+                }}
             >
               {row[name]}
             </VuiTypography>
